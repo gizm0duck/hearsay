@@ -6,27 +6,27 @@ module Hearsay
       included do
         after_save do
           ActiveSupport::Notifications.instrument("hearsay.#{self.class.name}.save", {
-            attributes: attributes,
+            attributes: attributes.symbolize_keys,
             changes: saved_changes
           })
         end
 
         after_update do
           ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.update", {
-            attributes: attributes,
+            attributes: attributes.symbolize_keys,
             changes: saved_changes
           })
         end
 
         after_create do
           ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.create", {
-            attributes: attributes
+            attributes: attributes.symbolize_keys
           })
         end
 
         after_destroy do
           ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.destroy", {
-            attributes: attributes
+            attributes: attributes.symbolize_keys
           })
         end
       end
