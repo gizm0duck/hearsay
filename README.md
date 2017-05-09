@@ -2,24 +2,9 @@
 Pub-sub library with active_record and action_controller hooks
 
 ## Usage
-How to use my plugin.
 
-## Installation
-Add this line to your application's Gemfile:
+Decouple your models with event listeners
 
-```ruby
-gem 'hearsay'
-```
-
-And then execute:
-```bash
-$ bundle
-```
-
-Or install it yourself as:
-```bash
-$ gem install hearsay
-```
 
 This is an example where we subscribe to all update calls for all ActiveRecord models
 ```
