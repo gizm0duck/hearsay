@@ -21,6 +21,9 @@ class UserSideEffects
 end
 ```
 
+When the `User.create` call occurs any classes that are subscribed to the User class and create callback will receive a method call corresponding to the lifecycle event that occurred.
+The event is a `ActiveSupport::Notifications::Event`
+
 This is an example where we subscribe to all update calls for all ActiveRecord models
 ```
 class AuditTrail
