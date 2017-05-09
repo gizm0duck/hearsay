@@ -1,5 +1,6 @@
+<<<<<<< HEAD
 # Hearsay
-Short description and motivation.
+Pub-sub library with active_record and action_controller hooks
 
 ## Usage
 How to use my plugin.
