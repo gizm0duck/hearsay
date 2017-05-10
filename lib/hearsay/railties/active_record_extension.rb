@@ -5,7 +5,7 @@ module Hearsay
 
       included do
         after_save do
-          ActiveSupport::Notifications.instrument("hearsay.#{self.class.name}.save", {
+          ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.save", {
             attributes: attributes.symbolize_keys,
             changes: saved_changes
           })

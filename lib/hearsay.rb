@@ -3,6 +3,7 @@
 require "hearsay/engine"
 require 'hearsay/config'
 require 'hearsay/subscriber'
+require 'hearsay/event'
 require 'hearsay/railtie' if defined?(Rails)
 
 module Hearsay
@@ -17,7 +18,7 @@ module Hearsay
   def self.subscribe!(event_name=nil)
     if block_given?
       ActiveSupport::Notifications.subscribe(event_name) do |*args|
-        yield ActiveSupport::Notifications::Event.new(*args)
+        yield Hearsay::Event.new(*args)
       end
     end
   end

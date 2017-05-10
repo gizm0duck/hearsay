@@ -8,8 +8,12 @@ module Hearsay
           args.each do |arg|
             key = klass == :all ? /hearsay\.active_record\.\w+\.#{arg}/ : "hearsay.active_record.#{klass}.#{arg}"
             Hearsay.subscribe! key do |event|
-              method_name = event.name.split('.').last
-              name.constantize.send(method_name, event) if name.constantize.respond_to? method_name
+              klass_name, method_name = event.name.split('.').last(2)
+              if name.constantize.respond_to? :listen
+                send(:listen, event)
+              else
+                puts "#{name} is subscribed to Hearsay events but does not implement a .listen method"
+              end
             end
           end
         end

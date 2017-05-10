@@ -4,7 +4,7 @@ class Subscribers::Cat
   #these are all of the types we can allow
   subscribe_to ::Cat, :update
 
-  def self.update(event)
+  def self.listen(event)
     puts "cat subscriber: #{event.name}, #{event.payload}"
   end
 
