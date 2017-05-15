@@ -12,6 +12,8 @@ module Hearsay
         Railtie.initialize_active_record if app.config.hearsay.enable_active_record
         Railtie.initialize_action_controller if app.config.hearsay.enable_action_controller
       end
+
+      app.config.middleware.insert_before Rails::Rack::Logger, Hearsay::Middleware
     end
 
     def self.initialize_active_record

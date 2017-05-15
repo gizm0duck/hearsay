@@ -2,8 +2,10 @@
 
 require "hearsay/engine"
 require 'hearsay/config'
+require 'hearsay/publisher'
 require 'hearsay/subscriber'
 require 'hearsay/event'
+require 'hearsay/middleware'
 require 'hearsay/railtie' if defined?(Rails)
 
 module Hearsay

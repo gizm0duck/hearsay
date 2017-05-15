@@ -3,7 +3,12 @@ class Hearsay::Event < ActiveSupport::Notifications::Event
 
   def initialize(*args)
     type = args[0].upcase
-    super
+
+    args[4] = args[4].merge({
+      hearsay_id: Hearsay::Transaction.id
+    })
+    
+    super args[0],args[1],args[2],args[3],args[4]
   end
 
 
