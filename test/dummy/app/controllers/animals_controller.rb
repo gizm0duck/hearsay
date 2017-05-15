@@ -1,6 +1,11 @@
 class AnimalsController < ApplicationController
   before_action :set_animal, only: [:show, :edit, :update, :destroy]
 
+
+  def hearsay_attributes
+    {current_user: 123, current_provider: 321}
+  end
+
   # GET /animals
   def index
     @animals = Animal.all

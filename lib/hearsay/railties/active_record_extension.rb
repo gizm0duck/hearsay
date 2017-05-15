@@ -5,27 +5,35 @@ module Hearsay
 
       included do
         after_save do
-          ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.save", {
+          Hearsay::Publisher.push('model', {
+            class: self.class.name,
+            method: 'save',
             attributes: attributes.symbolize_keys,
             changes: saved_changes
           })
         end
 
         after_update do
-          ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.update", {
+          Hearsay::Publisher.push('model', {
+            class: self.class.name,
+            method: 'update',
             attributes: attributes.symbolize_keys,
             changes: saved_changes
           })
         end
 
         after_create do
-          ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.create", {
+          Hearsay::Publisher.push('model', {
+            class: self.class.name,
+            method: 'create',
             attributes: attributes.symbolize_keys
           })
         end
 
         after_destroy do
-          ActiveSupport::Notifications.instrument("hearsay.active_record.#{self.class.name}.destroy", {
+          Hearsay::Publisher.push('model', {
+            class: self.class.name,
+            method: 'destroy',
             attributes: attributes.symbolize_keys
           })
         end
