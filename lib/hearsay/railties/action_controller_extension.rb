@@ -14,8 +14,7 @@ module Hearsay
           uuid: 'ABC123',#request.uuid,
           client_ip: request.ip,
         }
-
-        request_data = request_data.merge(request.controller_instance.hearsay_attributes) if request.controller_instance.respond_to?(:hearsay_attributes)
+        request_data[:custom_attributes] = request.controller_instance.hearsay_attributes if request.controller_instance.respond_to?(:hearsay_attributes)
 
         response_data = {
           header: response.header,
@@ -50,8 +49,7 @@ module Hearsay
               client_ip: event.payload[:client_ip],
               uuid: event.payload[:uuid],
               response: event.payload[:response]
-            }
-
+            }.merge(Hash(event.payload[:custom_attributes]))
             Hearsay::Publisher.push 'controller', payload
           end
 
