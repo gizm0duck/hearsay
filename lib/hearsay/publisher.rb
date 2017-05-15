@@ -9,6 +9,7 @@ module Hearsay
         timestamp: DateTime.now.to_f,
         formattedTime: DateTime.now.strftime,
         pid: $$,
+        hearsay_version: Hearsay::VERSION,
         thread: Thread.current.object_id
       })
 

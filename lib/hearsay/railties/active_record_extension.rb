@@ -9,7 +9,7 @@ module Hearsay
             class: self.class.name,
             method: 'save',
             attributes: attributes.symbolize_keys,
-            changes: saved_changes
+            changes: respond_to?(:saved_changes) ? saved_changes : changes
           })
         end
 
@@ -18,7 +18,7 @@ module Hearsay
             class: self.class.name,
             method: 'update',
             attributes: attributes.symbolize_keys,
-            changes: saved_changes
+            changes: respond_to?(:saved_changes) ? saved_changes : changes
           })
         end
 

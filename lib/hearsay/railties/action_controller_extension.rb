@@ -31,12 +31,16 @@ module Hearsay
           if event.name == "process_action.action_controller"
             payload_out = {}
             headers_out = event.payload[:headers].instance_variable_get(:@req).env.reject{|k, v| !(String === v || Integer === v || Hash === v || Array === v) }
-            dispatch_cookies_out = event.payload[:headers]["action_dispatch.cookies"].reject{|k, v| !(String === v || Integer === v || Hash === v || Array === v) }
+            if event.payload[:headers]["action_dispatch.cookies"]
+              dispatch_cookies_out = event.payload[:headers]["action_dispatch.cookies"].reject{|k, v| !(String === v || Integer === v || Hash === v || Array === v) }
+            else
+              dispatch_cookies_out = {}
+            end
 
             payload = {
               headers: headers_out.reject!{|k,v| !(k==k.upcase)},
               controller: event.payload[:controller],
-              cookies: dispatch_cookies_out,
+              cookies: Hash[*dispatch_cookies_out.sort.flatten],
               action: event.payload[:action],
               params: event.payload[:params],
               format: event.payload[:format],
