@@ -6,6 +6,7 @@ require 'hearsay/publisher'
 require 'hearsay/subscriber'
 require 'hearsay/event'
 require 'hearsay/middleware'
+require 'hearsay/version'
 require 'hearsay/railtie' if defined?(Rails)
 
 module Hearsay
