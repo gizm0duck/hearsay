@@ -37,6 +37,14 @@ module Hearsay
             attributes: attributes.symbolize_keys
           })
         end
+
+        after_rollback do
+          Hearsay::Publisher.push('model', {
+            class: self.class.name,
+            method: 'rollback',
+            attributes: attributes.symbolize_keys
+          })
+        end
       end
     end
   end
