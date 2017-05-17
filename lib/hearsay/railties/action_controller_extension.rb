@@ -1,10 +1,6 @@
 module Hearsay
   module Railties
     module ActionControllerExtension
-
-      class Event
-
-      end
       extend ActiveSupport::Concern
 
       def append_info_to_payload(payload)
@@ -29,19 +25,19 @@ module Hearsay
 
       included do
 
-        puts "INCLUDED ACTION CONTROLLER"
+        puts "INCLUDED ACTION CONTROLLER: #{self.inspect}"
         Hearsay.subscribe! /process_action.action_controller$/i do |event|
 
-          payload_out = {}
 
-
+          hearsay_params = event.payload[:params].dup
+          Hearsay.scrub_payload!(hearsay_params) {|k, v| !(String === v || Integer === v || Hash === v || Array === v) }
 
           payload = {
             headers: event.payload[:hearsay_header],
             controller: event.payload[:controller],
-            cookies: event.payload[:hear_cookies],
+            cookies: event.payload[:hearsay_cookies],
             action: event.payload[:action],
-            params: event.payload[:params],
+            params: hearsay_params,
             format: event.payload[:format],
             method: event.payload[:method],
             path: event.payload[:path],

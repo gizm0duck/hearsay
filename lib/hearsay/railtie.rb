@@ -18,15 +18,6 @@ module Hearsay
 
     def self.initialize_active_record
       require 'hearsay/railties/active_record_extension'
-      # Hearsay.subscribe!(/hearsay\.active_record/) do |event|
-        # regex = Regexp.union Hearsay::Subscriber::ActiveRecord.subscribers_by_events.keys
-        # if event.name.match(regex)
-        #   Hearsay::Subscriber::ActiveRecord.subscribers_by_events[event.name].each do |subscriber|
-        #     method_name = event.name.split('.').last
-        #     subscriber.constantize.send(method_name, event) if subscriber.constantize.respond_to? method_name
-        #   end
-        # end
-      # end
     end
 
     def self.initialize_action_controller

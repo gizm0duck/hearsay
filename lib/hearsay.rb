@@ -25,4 +25,11 @@ module Hearsay
       end
     end
   end
+
+  def self.scrub_payload!(hash, &blk)
+    hash.each do |k, v|
+      scrub_payload!(v, &blk)  if v.is_a?(Hash)
+      hash[k] = v.inspect if blk.call(k, v)
+    end
+  end
 end
