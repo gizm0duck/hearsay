@@ -55,6 +55,8 @@ module Hearsay
   end
 end
 
-ActiveSupport.on_load(:action_controller_base) do
-  include Hearsay::Railties::ActionControllerExtension
+ActiveSupport.on_load(:action_controller) do
+  if self == ActionController::Base
+    include Hearsay::Railties::ActionControllerExtension
+  end
 end
