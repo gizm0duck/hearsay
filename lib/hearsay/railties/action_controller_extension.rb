@@ -24,8 +24,6 @@ module Hearsay
       end
 
       included do
-
-        puts "INCLUDED ACTION CONTROLLER: #{self.inspect}"
         Hearsay.subscribe! /process_action.action_controller$/i do |event|
 
 
@@ -57,8 +55,6 @@ module Hearsay
   end
 end
 
-ActiveSupport.on_load(:action_controller) do
-  if self == ActionController::Base
-    include Hearsay::Railties::ActionControllerExtension
-  end
+ActiveSupport.on_load(:action_controller_base) do
+  include Hearsay::Railties::ActionControllerExtension
 end

@@ -11,6 +11,7 @@ module Hearsay
       if app.config.hearsay.enabled
         Railtie.initialize_active_record if app.config.hearsay.enable_active_record
         Railtie.initialize_action_controller if app.config.hearsay.enable_action_controller
+        Railtie.initialize_action_cable if app.config.hearsay.enable_action_cable
       end
 
       app.config.middleware.insert_before Rails::Rack::Logger, Hearsay::Middleware
@@ -21,8 +22,11 @@ module Hearsay
     end
 
     def self.initialize_action_controller
-      puts "initializing action controller"
       require 'hearsay/railties/action_controller_extension'
+    end
+
+    def self.initialize_action_cable
+      require 'hearsay/railties/action_cable_extension'
     end
   end
 end
