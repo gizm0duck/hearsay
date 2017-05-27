@@ -7,7 +7,6 @@ module Hearsay
         super
         request_data = {
           server_ip: request.remote_ip,
-          uuid: request.uuid,
           client_ip: request.ip,
         }
         if request.controller_instance.respond_to?(:hearsay_attributes)
