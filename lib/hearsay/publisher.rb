@@ -19,7 +19,7 @@ module Hearsay
 
     def self.calculate_key(type, payload)
       if type == 'model'
-        return "hearsay.model.#{payload[:class_name]}.#{payload[:method_name]}"
+        return "hearsay.model.#{payload[:class]}.#{payload[:method]}"
       elsif type == 'cable'
         return "hearsay.cable.#{payload[:channel_class]}.#{payload[:action]}"
       else
