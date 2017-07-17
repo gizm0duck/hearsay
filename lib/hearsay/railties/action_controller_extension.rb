@@ -9,10 +9,6 @@ module Hearsay
           server_ip: request.remote_ip,
           client_ip: request.ip,
         }
-        if request.controller_instance.respond_to?(:hearsay_attributes)
-          # request_data[:custom_attributes] = request.controller_instance.hearsay_attributes
-          Thread.current[:hearsay_custom_attributes] = request.controller_instance.hearsay_attributes
-        end
         response_data = {
           hearsay_header: response.header,
           status: response.status,
@@ -23,6 +19,15 @@ module Hearsay
       end
 
       included do
+        before_action :check_for_hearsay_custom_attributes
+
+        def check_for_hearsay_custom_attributes
+          if request.controller_instance.respond_to?(:hearsay_attributes)
+            # request_data[:custom_attributes] = request.controller_instance.hearsay_attributes
+            Thread.current[:hearsay_custom_attributes] = request.controller_instance.hearsay_attributes
+          end
+        end
+
         Hearsay.subscribe! /process_action.action_controller$/i do |event|
 
 
@@ -45,7 +50,7 @@ module Hearsay
             client_ip: event.payload[:client_ip],
             uuid: event.payload[:uuid],
             response: event.payload[:response]
-          }.merge(Hash(event.payload[:custom_attributes]))
+          }
           Hearsay::Publisher.push 'controller', payload
 
         end

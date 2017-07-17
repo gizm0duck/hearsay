@@ -7,6 +7,7 @@ module Hearsay
 
     def self.destroy
       Thread.current[:hearsay_transaction_id] = nil
+      Thread.current[:hearsay_custom_attributes] = nil
     end
 
     def self.id=(id)
